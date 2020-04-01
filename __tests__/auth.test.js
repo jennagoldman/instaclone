@@ -1,34 +1,48 @@
-require('dotenv').config();
+const { getUser, getAgent } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
-const connect = require('../lib/utils/connect');
-const mongoose = require('mongoose');
 
 describe('auth routes', () => {
-  beforeAll(() => {
-    connect();
-  });
-
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
-
   it('signs up a user', () => {
     return request(app)
       .post('/api/v1/auth/signup')
       .send({
-        email: 'jenna@test.com',
-        password: 'testPass'
+        email: 'spot@dogs.com',
+        password: 'spotWasHere'
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          email: 'jenna@test.com',
+          email: 'spot@dogs.com',
+          __v: 0
+        });
+      });
+  });
+
+  it('logs in a user', async() => {
+    return request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'test@test.com',
+        password: 'password'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          email: 'test@test.com',
+          __v: 0
+        });
+      });
+  });
+
+  it('verifies a logged in user', () => {
+    return getAgent()
+      .get('/api/v1/auth/verify')
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          email: 'test@test.com',
           __v: 0
         });
       });

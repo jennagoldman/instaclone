@@ -1,8 +1,8 @@
 const chance = require('chance').Chance();
 const User = require('../lib/models/User');
 
-module.exports = async({ usersToCreate = 5 } = {}) => {
-  const logginInuser = await User.create({
+module.exports = async({ usersToCreate = 5, notesToCreate = 100 } = {}) => {
+  const loggedInUser = await User.create({
     email: 'test@test.com',
     password: 'password'
   });
