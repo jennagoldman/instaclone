@@ -26,7 +26,7 @@ module.exports = async({ usersToCreate = 5, postsToCreate = 25, commentsToCreate
   })));
 
   const comments = await Comment.create([...Array(commentsToCreate)].slice(1).map(() => ({
-    user: chance.weighted([loggedInUser, ...users], [2, ...users.map(() => 1)])._id,
+    commentBy: chance.weighted([loggedInUser, ...users], [2, ...users.map(() => 1)])._id,
     post: chance.pickone(posts)._id,
     comment: chance.sentence()
   })));

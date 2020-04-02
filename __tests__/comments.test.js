@@ -6,22 +6,21 @@ const app = require('../lib/app');
 describe('posts routes', () => {
   it('creates a commentt', async() => {
     const user = await getUser();
+    const post = await getPost();
 
     return getAgent()
       .post('/api/v1/comments')
       .send({
-        user: user._id,
-        photoUrl: 'http://placekitten.com/200/200',
-        caption: 'A cute kitten.',
-        tags: ['cats', 'kitten', 'icanhazcheeseburger']
+        commentBy: user._id,
+        post: post._id,
+        comment: 'Tell your dog I said hi.'
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          user: user._id,
-          photoUrl: 'http://placekitten.com/200/200',
-          caption: 'A cute kitten.',
-          tags: ['cats', 'kitten', 'icanhazcheeseburger'],
+          commentBy: user._id,
+          post: post._id,
+          comment: 'Tell your dog I said hi.',
           __v: 0
         });
       });
