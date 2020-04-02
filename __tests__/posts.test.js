@@ -63,6 +63,7 @@ describe('posts routes', () => {
           photoUrl: post.photoUrl,
           caption: post.caption,
           tags: expect.any(Array),
+          comments: expect.any(Array),
           __v: 0
         });
       });

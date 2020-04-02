@@ -26,7 +26,6 @@ describe('posts routes', () => {
   it('deletes a comment by id', async() => {
     const user = await getUser({ username: 'jennag' });
     const comment = await getComment({ commentBy: user._id });
-    console.log(comment);
 
     return getAgent()
       .delete(`/api/v1/comments/${comment._id}`)
