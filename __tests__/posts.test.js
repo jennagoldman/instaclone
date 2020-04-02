@@ -68,17 +68,18 @@ describe('posts routes', () => {
       });
   });
 
-  // it('updates a post by id', async() => {
-  //   const post = await getPost();
+  it('updates a post by id', async() => {
+    const user = await getUser({ username: 'jennag' });
+    const post = await getPost({ user: user._id });
 
-  //   return request(app)
-  //     .patch(`/api/v1/posts/${post._id}`)
-  //     .send({ caption: 'this is a new caption' })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         ...post,
-  //         caption: 'this is a new caption'
-  //       });
-  //     });
-  // });
+    return getAgent()
+      .patch(`/api/v1/posts/${post._id}`)
+      .send({ caption: 'this is a new caption' })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...post,
+          caption: 'this is a new caption'
+        });
+      });
+  });
 });

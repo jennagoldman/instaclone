@@ -18,7 +18,7 @@ module.exports = async({ usersToCreate = 5, postsToCreate = 25 } = {}) => {
   const tags = ['tbt', 'smile', 'aww', 'feltcute', 'butfirstcoffee', 'dogstagram', 'blessed'];
 
   const posts = await Post.create([...Array(postsToCreate)].slice(1).map(() => ({
-    user: chance.pickone(users)._id,
+    user: chance.weighted([loggedInUser, ...users], [2, ...users.map(() => 1)])._id,
     photoUrl: chance.url(),
     caption: chance.sentence(),
     tags: [chance.pickone(tags), chance.pickone(tags)]
