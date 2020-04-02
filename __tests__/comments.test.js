@@ -1,7 +1,4 @@
-const { getUser, getAgent, getPost, getPosts } = require('../db/data-helpers');
-
-const request = require('supertest');
-const app = require('../lib/app');
+const { getUser, getAgent, getPost, getComment } = require('../db/data-helpers');
 
 describe('posts routes', () => {
   it('creates a commentt', async() => {
@@ -26,14 +23,15 @@ describe('posts routes', () => {
       });
   });
 
-  // it('deletes a comment by id', async() => {
-  //   const user = await getUser({ username: 'jennag' });
-  //   const post = await getPost({ user: user._id });
+  it('deletes a comment by id', async() => {
+    const user = await getUser({ username: 'jennag' });
+    const comment = await getComment({ commentBy: user._id });
+    console.log(comment);
 
-  //   return getAgent()
-  //     .delete(`/api/v1/comments/${post._id}`)
-  //     .then(res => {
-  //       expect(res.body).toEqual(post);
-  //     });
-  // });
+    return getAgent()
+      .delete(`/api/v1/comments/${comment._id}`)
+      .then(res => {
+        expect(res.body).toEqual(comment);
+      });
+  });
 });
