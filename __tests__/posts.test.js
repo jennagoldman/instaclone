@@ -82,4 +82,15 @@ describe('posts routes', () => {
         });
       });
   });
+
+  it('deletes a post by id', async() => {
+    const user = await getUser({ username: 'jennag' });
+    const post = await getPost({ user: user._id });
+
+    return getAgent()
+      .delete(`/api/v1/posts/${post._id}`)
+      .then(res => {
+        expect(res.body).toEqual(post);
+      });
+  });
 });
